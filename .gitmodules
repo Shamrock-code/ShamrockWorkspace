@@ -2,5 +2,5 @@
 	path = sycl_compiler_gits/dpcpp
 	url = https://github.com/intel/llvm.git
 [submodule "sycl_compiler_gits/OpenSYCL"]
-	path = sycl_compiler_gits/OpenSYCL
+	path = sycl_compiler_gits/opensycl
 	url = https://github.com/OpenSYCL/OpenSYCL.git
