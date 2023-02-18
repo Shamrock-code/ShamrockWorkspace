@@ -1,3 +1,5 @@
+git submodule update
+
 # setup the compilers
 sh setup_compilers.sh
 
