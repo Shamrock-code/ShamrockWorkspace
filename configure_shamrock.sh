@@ -11,6 +11,9 @@ cd Shamrock
 python3 buildbot/configure.py --gen "${Buildtool}" --tests --build release \
     --outdir build_config/dpcpp_cuda_release --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda
 
+python3 buildbot/configure.py --gen "${Buildtool}" --tests --build release \
+    --outdir build_config/dpcpp_cuda_profiling --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda-profiling
+
 python3 buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
     --outdir build_config/dpcpp_cuda_debug --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda
 
@@ -34,7 +37,6 @@ python3 buildbot/configure.py --gen "${Buildtool}" --tests --build release \
 
 python3 buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
     --outdir build_config/opensycl_generic_debug --cxxpath sycl_compilers/opensycl --compiler opensycl --profile generic
-
 
 
 
