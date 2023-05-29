@@ -37,7 +37,6 @@ python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debu
 
 
 
+
 cd Shamrock
-
-
 ln -sf build_config/dpcpp_cuda_release build
