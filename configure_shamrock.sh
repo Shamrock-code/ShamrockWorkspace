@@ -7,6 +7,8 @@ echo "current build system : ${Buildtool}"
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
     --outdir Shamrock/build_config/dpcpp_cuda_release --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda
+python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
+    --outdir Shamrock/build_config/dpcpp_cuda_release_sm80 --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda_sm80
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
     --outdir Shamrock/build_config/dpcpp_cuda_profiling --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda-profiling
