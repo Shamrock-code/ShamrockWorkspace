@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  cache_opensycl:
+  opensycl-linux:
     uses: ./.github/workflows/linux-opensycl.yml
     with:
       clang: ${{ matrix.clang }}
@@ -30,4 +30,11 @@ jobs:
         cuda: [11.0.2]
         rocm: [5.4.3]
 
+  opensycl-macos:
+    uses: ./.github/workflows/macos-opensycl.yml
+    with:
+      os: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
     
