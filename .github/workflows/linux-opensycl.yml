@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: clone OpenSycl
-        run: git submodule update sycl_compiler_gits/opensycl 
+        run: git submodule update --init sycl_compiler_gits/opensycl 
 
       - name: install boost
         run: sudo apt install libboost-all-dev
@@ -72,12 +72,12 @@ jobs:
 
       - name: configure & install OpenSycl
         run: |
-          cd OpenSYCL
-          cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-${{inputs.clang}} -DCLANG_EXECUTABLE_PATH=/usr/bin/clang++-${{inputs.clang}} -DLLVM_DIR=/usr/lib/llvm-${{inputs.clang}}/cmake -DCMAKE_INSTALL_PREFIX=../OpenSYCL_comp .
+          cd sycl_compiler_gits/opensycl
+          cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++-${{inputs.clang}} -DCLANG_EXECUTABLE_PATH=/usr/bin/clang++-${{inputs.clang}} -DLLVM_DIR=/usr/lib/llvm-${{inputs.clang}}/cmake -DCMAKE_INSTALL_PREFIX=../../sycl_compilers/opensycl .
           make -j install
 
       - name: 'Tar opensycl'
-        run: tar -cvf opensycl.tar OpenSYCL_comp
+        run: tar -cvf opensycl.tar sycl_compilers/opensycl
 
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
