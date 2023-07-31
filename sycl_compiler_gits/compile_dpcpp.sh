@@ -42,7 +42,7 @@ ninja all\
     lib/libsycl-fallback-complex.spv       \
     lib/libsycl.so.7\
     lib/libsycl-fallback-cstring.o         \
-    lib/libsycl.so.7.0.0-5\
+    lib/libsycl.so.7.0.0-7\
     tools/libdevice/libsycldevice\
     install
 
