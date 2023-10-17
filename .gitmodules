@@ -1,6 +1,6 @@
 [submodule "sycl_compiler_gits/llvm"]
-	path = sycl_compiler_gits/dpcpp
+	path = sycl_compiler_gits/intel_llvm
 	url = https://github.com/intel/llvm.git
-[submodule "sycl_compiler_gits/OpenSYCL"]
-	path = sycl_compiler_gits/opensycl
-	url = https://github.com/OpenSYCL/OpenSYCL.git
+[submodule "sycl_compiler_gits/AdaptiveCpp"]
+	path = sycl_compiler_gits/AdaptiveCpp
+	url = https://github.com/AdaptiveCpp/AdaptiveCpp.git
