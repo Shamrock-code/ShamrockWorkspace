@@ -1,13 +1,19 @@
 
 cd intel_llvm
 
+INSTALL_PATH=$(pwd)/../../sycl_compilers/intel_llvm
+
+INSTALL_PATH=$(realpath ${INSTALL_PATH})
+
+CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"
+
 if ! type nvcc > /dev/null; then
     echo "CUDA=false"
 
     python3 buildbot/configure.py \
             --llvm-external-projects compiler-rt \
             --enable-plugin native_cpu \
-            --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../dpcpp_compiler"
+            --cmake-opt=${CMAKE_INSTALL_}
 
 else
     echo "CUDA=true"
@@ -16,7 +22,7 @@ else
             --llvm-external-projects compiler-rt \
             --enable-plugin native_cpu \
 	    --cuda \
-            --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../dpcpp_compiler"
+            --cmake-opt=${CMAKE_INSTALL_}
 
 fi
 
