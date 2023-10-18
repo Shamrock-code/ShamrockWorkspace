@@ -1,12 +1,23 @@
 
-cd dpcpp
+cd intel_llvm
 
 if ! type nvcc > /dev/null; then
     echo "CUDA=false"
-    python3 buildbot/configure.py --enable-esimd-emulator --llvm-external-projects compiler-rt --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../../sycl_compilers/dpcpp"
+
+    python3 buildbot/configure.py \
+            --llvm-external-projects compiler-rt \
+            --enable-plugin native_cpu \
+            --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../dpcpp_compiler"
+
 else
     echo "CUDA=true"
-    python3 buildbot/configure.py --enable-esimd-emulator --llvm-external-projects compiler-rt --cuda --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../../sycl_compilers/dpcpp"
+    
+    python3 buildbot/configure.py \
+            --llvm-external-projects compiler-rt \
+            --enable-plugin native_cpu \
+	    --cuda \
+            --cmake-opt="-DCMAKE_INSTALL_PREFIX=../../dpcpp_compiler"
+
 fi
 
 cd build
