@@ -6,39 +6,27 @@ fi
 echo "current build system : ${Buildtool}"
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/dpcpp_cuda_release --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda
-python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/dpcpp_cuda_release_sm80 --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda_sm80
-
-python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/dpcpp_cuda_profiling --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda-profiling
-
+    --builddir Shamrock/build_config/intel_llvm_cuda_release --cxxpath sycl_compilers/intel_llvm --compiler intel_llvm --profile cuda
+    
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
-    --outdir Shamrock/build_config/dpcpp_cuda_debug --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda
+    --builddir Shamrock/build_config/intel_llvm_cuda_debug --cxxpath sycl_compilers/intel_llvm --compiler intel_llvm --profile cuda
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/dpcpp_cudai32_release --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda-index32bit
-
+    --builddir Shamrock/build_config/acpp_omp_release --cxxpath sycl_compilers/acpp --compiler acpp --profile omp
+    
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
-    --outdir Shamrock/build_config/dpcpp_cudai32_debug --cxxpath sycl_compilers/dpcpp --compiler dpcpp --profile cuda-index32bit
+    --builddir Shamrock/build_config/acpp_omp_debug --cxxpath sycl_compilers/acpp --compiler acpp --profile omp
+    
+python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build asan \
+    --builddir Shamrock/build_config/acpp_omp_asan --cxxpath sycl_compilers/acpp --compiler acpp --profile omp
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/opensycl_omp_release --cxxpath sycl_compilers/opensycl --compiler opensycl --profile omp
-
-python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
-    --outdir Shamrock/build_config/opensycl_omp_debug --cxxpath sycl_compilers/opensycl --compiler opensycl --profile omp
-
-python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
-    --outdir Shamrock/build_config/opensycl_omp_asan_debug --cxxpath sycl_compilers/opensycl --compiler opensycl --profile omp_sanitizer
+    --builddir Shamrock/build_config/acpp_cuda_sm70_release --cxxpath sycl_compilers/acpp --compiler acpp --profile cuda-sm70
 
 python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build release \
-    --outdir Shamrock/build_config/opensycl_generic_release --cxxpath sycl_compilers/opensycl --compiler opensycl --profile generic
-
-python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build debug \
-    --outdir Shamrock/build_config/opensycl_generic_debug --cxxpath sycl_compilers/opensycl --compiler opensycl --profile generic
-
-
+    --builddir Shamrock/build_config/acpp_generic_release --cxxpath sycl_compilers/acpp --compiler acpp --profile generic
+    
 
 
 cd Shamrock
-ln -sf build_config/dpcpp_cuda_release build
+ln -sf build_config/intel_llvm_cuda_release build

@@ -1,6 +1,6 @@
 
 cd AdaptiveCpp
-cmake -DCMAKE_INSTALL_PREFIX=../../sycl_compilers/acpp -DWITH_CUDA_BACKEND=ON -DCUDAToolkit_LIBRARY_ROOT=/usr -B build . 
+cmake -DCMAKE_INSTALL_PREFIX=../../sycl_compilers/acpp -B build . 
 
 cd build
 make -j install
