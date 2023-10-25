@@ -29,4 +29,4 @@ python3 Shamrock/buildbot/configure.py --gen "${Buildtool}" --tests --build rele
 
 
 cd Shamrock
-ln -sf build_config/intel_llvm_cuda_release build
+ln -sf build_config/acpp_omp_release build
