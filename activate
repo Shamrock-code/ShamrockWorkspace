@@ -1,0 +1,76 @@
+WORKSPACEDIR=$(realpath $(dirname "$0"))
+echo "Shamrock Workspace dir :" $WORKSPACEDIR
+
+####################################
+# Workspace bin setup
+####################################
+
+chmod +x $WORKSPACEDIR/bin/interactive_intelllvm_setup
+
+export PATH=$WORKSPACEDIR/bin:$PATH
+
+
+####################################
+# python venv setup
+####################################
+
+echo ""
+echo "------ python venv configuration ------"
+
+export PyVenv=$WORKSPACEDIR/ShamrockPyVenv
+
+if [ -d "$PyVenv" ]; then
+
+else
+    echo "creating python venv :"
+    python3 -m venv $PyVenv
+fi
+
+echo "Python venv dir  :" $PyVenv
+
+
+echo "activating venv :"
+source $PyVenv/bin/activate
+
+echo "---------------------------------------"
+echo ""
+
+####################################
+# compiler setup
+####################################
+
+if [ -d "$WORKSPACEDIR/sycl_compilers" ]; then
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/intel_llvm/" ]; then
+        export LLVM_HOME=$WORKSPACEDIR/sycl_compilers/intel_llvm/
+        echo "Intel LLVM dir  :" $LLVM_HOME
+        export PATH=$LLVM_HOME/bin:$PATH
+        export LD_LIBRARY_PATH=$LLVM_HOME/lib:$LD_LIBRARY_PATH
+    fi
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/acpp/" ]; then
+        export ACPP_HOME=$WORKSPACEDIR/sycl_compilers/acpp/
+        echo "AdaptiveCpp dir :" $ACPP_HOME
+        export PATH=$ACPP_HOME/bin:$PATH
+        export LD_LIBRARY_PATH=$ACPP_HOME/lib:$LD_LIBRARY_PATH
+    fi
+
+else 
+    echo "the compilers are not setup please run ... script"
+    return
+fi
+
+####################################
+# Shamrock repo setup
+####################################
+
+if [ -d "$WORKSPACEDIR/Shamrock" ]; then
+
+else
+    if git clone --recurse-submodules git@github.com:tdavidcl/Shamrock.git $WORKSPACEDIR/Shamrock; then
+        echo "-> Succes"
+    else
+        echo "Failed to clone the shamrock repo"
+        return
+    fi
+fi
