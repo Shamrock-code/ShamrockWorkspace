@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "---------------------------------------"
+echo "| AdaptiveCpp interactive setup       |"
+echo "---------------------------------------"
+echo 
+
+WORKSPACEDIR=$(realpath $(dirname "$0")/..)
+
+echo "Shamrock workspace dir :" $WORKSPACEDIR
+
+#### move to acpp folder dir
+cd $WORKSPACEDIR/sycl_compiler_gits/AdaptiveCpp
+
+INSTALL_PATH=$WORKSPACEDIR/sycl_compilers/acpp
+CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"
+
+cmake $CMAKE_INSTALL_ -B build . 
+
+cd build
+make -j install

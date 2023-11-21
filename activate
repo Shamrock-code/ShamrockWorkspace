@@ -1,3 +1,8 @@
+echo "-------------------------------------------"
+echo "| Activate shamrock workspace environment |"
+echo "-------------------------------------------"
+echo 
+
 WORKSPACEDIR=$(realpath $(dirname "$0"))
 echo "Shamrock Workspace dir :" $WORKSPACEDIR
 
@@ -6,15 +11,49 @@ echo "Shamrock Workspace dir :" $WORKSPACEDIR
 ####################################
 
 chmod +x $WORKSPACEDIR/bin/interactive_intelllvm_setup
+chmod +x $WORKSPACEDIR/bin/interactive_acpp_setup
+chmod +x $WORKSPACEDIR/bin/update_compilers
 
 export PATH=$WORKSPACEDIR/bin:$PATH
 
+####################################
+# compiler setup
+####################################
+
+echo ""
+echo "------ sycl compilers config ------"
+if [ -d "$WORKSPACEDIR/sycl_compilers" ]; then
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/intel_llvm/" ]; then
+        export LLVM_HOME=$WORKSPACEDIR/sycl_compilers/intel_llvm/
+        echo "Intel LLVM dir  :" $LLVM_HOME
+        export PATH=$LLVM_HOME/bin:$PATH
+        export LD_LIBRARY_PATH=$LLVM_HOME/lib:$LD_LIBRARY_PATH
+    else
+        echo "Intel llvm is not configured, to configure it run : interactive_intelllvm_setup"
+    fi
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/acpp/" ]; then
+        export ACPP_HOME=$WORKSPACEDIR/sycl_compilers/acpp/
+        echo "AdaptiveCpp dir :" $ACPP_HOME
+        export PATH=$ACPP_HOME/bin:$PATH
+        export LD_LIBRARY_PATH=$ACPP_HOME/lib:$LD_LIBRARY_PATH
+    else
+        echo "AdaptiveCpp is not configured, to configure it run : interactive_acpp_setup"
+    fi
+
+else 
+    echo "the compilers are not setup please run the following :"
+    echo "interactive_intelllvm_setup or interactive_acpp_setup"
+    return
+fi
+echo "---------------------------------------"
+echo ""
 
 ####################################
 # python venv setup
 ####################################
 
-echo ""
 echo "------ python venv configuration ------"
 
 export PyVenv=$WORKSPACEDIR/ShamrockPyVenv
@@ -36,36 +75,11 @@ echo "---------------------------------------"
 echo ""
 
 ####################################
-# compiler setup
-####################################
-
-if [ -d "$WORKSPACEDIR/sycl_compilers" ]; then
-
-    if [ -d "$WORKSPACEDIR/sycl_compilers/intel_llvm/" ]; then
-        export LLVM_HOME=$WORKSPACEDIR/sycl_compilers/intel_llvm/
-        echo "Intel LLVM dir  :" $LLVM_HOME
-        export PATH=$LLVM_HOME/bin:$PATH
-        export LD_LIBRARY_PATH=$LLVM_HOME/lib:$LD_LIBRARY_PATH
-    fi
-
-    if [ -d "$WORKSPACEDIR/sycl_compilers/acpp/" ]; then
-        export ACPP_HOME=$WORKSPACEDIR/sycl_compilers/acpp/
-        echo "AdaptiveCpp dir :" $ACPP_HOME
-        export PATH=$ACPP_HOME/bin:$PATH
-        export LD_LIBRARY_PATH=$ACPP_HOME/lib:$LD_LIBRARY_PATH
-    fi
-
-else 
-    echo "the compilers are not setup please run ... script"
-    return
-fi
-
-####################################
 # Shamrock repo setup
 ####################################
 
 if [ -d "$WORKSPACEDIR/Shamrock" ]; then
-
+    echo "Shamrock repo directory :" $WORKSPACEDIR/Shamrock
 else
     if git clone --recurse-submodules git@github.com:tdavidcl/Shamrock.git $WORKSPACEDIR/Shamrock; then
         echo "-> Succes"

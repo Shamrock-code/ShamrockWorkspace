@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "---------------------------------------"
+echo "| update compilers                    |"
+echo "---------------------------------------"
+echo 
+
+WORKSPACEDIR=$(realpath $(dirname "$0")/..)
+
+echo "Shamrock workspace dir :" $WORKSPACEDIR
+
+sh $WORKSPACEDIR/sycl_compiler_gits/update_compilers.sh

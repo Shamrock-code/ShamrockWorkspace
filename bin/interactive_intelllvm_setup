@@ -1,0 +1,45 @@
+#!/bin/sh
+
+echo "---------------------------------------"
+echo "| Intel llvm interactive setup        |"
+echo "---------------------------------------"
+echo 
+
+WORKSPACEDIR=$(realpath $(dirname "$0")/..)
+
+echo "Shamrock workspace dir :" $WORKSPACEDIR
+
+#### move to intel folder dir
+cd $WORKSPACEDIR/sycl_compiler_gits/intel_llvm
+
+INSTALL_PATH=$WORKSPACEDIR/sycl_compilers/intel_llvm
+CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"
+
+read -p "use cuda [y/n]: " yn
+case $yn in
+    [Yy]*) ARG_CUDA="--cuda"  ;;  
+    [Nn]*) ARG_CUDA="" ;;
+esac
+
+read -p "enable native cpu plugin [y/n]: " yn
+case $yn in
+    [Yy]*) ARG_NativeCPU="--native_cpu"  ;;  
+    [Nn]*) ARG_NativeCPU="" ;;
+esac
+
+echo "------ configuring intel llvm ------"
+
+python3 buildbot/configure.py \
+    --llvm-external-projects compiler-rt \
+    $ARG_NativeCPU \
+    $ARG_CUDA \
+    --cmake-opt=${CMAKE_INSTALL_}
+
+echo "------ compiling intel llvm ------"
+
+cd build
+
+ninja all\
+    lib/all\
+    tools/libdevice/libsycldevice\
+    install
