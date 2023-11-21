@@ -18,18 +18,12 @@ if [ $count -eq 0 ] ; then
     echo "submodule ok"
 else
     echo "the submodule were not pulled"
-    git submodule update --init --recursive AdaptiveCpp
+    git submodule init
+    git submodule update
 fi
 
 
 cd $WORKSPACEDIR/sycl_compiler_gits/AdaptiveCpp
-
-if . -mindepth 1 -maxdepth 1 | read; then
-    echo "submodule ok"
-else
-    echo "the submodule were not pulled"
-    git submodule update --init --recursive .
-fi
 
 INSTALL_PATH=$WORKSPACEDIR/sycl_compilers/acpp
 CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"

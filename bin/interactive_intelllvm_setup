@@ -17,7 +17,8 @@ if [ $count -eq 0 ] ; then
     echo "submodule ok"
 else
     echo "the submodule were not pulled"
-    git submodule update --init --recursive intel_llvm
+    git submodule init
+    git submodule update
 fi
 
 
