@@ -10,13 +10,17 @@ WORKSPACEDIR=$(realpath $(dirname "$0")/..)
 echo "Shamrock workspace dir :" $WORKSPACEDIR
 
 #### move to intel folder dir
-cd $WORKSPACEDIR/sycl_compiler_gits/intel_llvm
+cd $WORKSPACEDIR/sycl_compiler_gits
 
-if . -mindepth 1 -maxdepth 1 | read; then
+if find intel_llvm -mindepth 1 -maxdepth 1 | read; then
+    echo "submodule ok"
 else
     echo "the submodule were not pulled"
-    git submodule update --init --recursive .
+    git submodule update --init --recursive intel_llvm
 fi
+
+
+cd $WORKSPACEDIR/sycl_compiler_gits/intel_llvm
 
 INSTALL_PATH=$WORKSPACEDIR/sycl_compilers/intel_llvm
 CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"
