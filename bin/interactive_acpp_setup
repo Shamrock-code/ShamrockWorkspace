@@ -13,7 +13,8 @@ echo "Shamrock workspace dir :" $WORKSPACEDIR
 
 cd $WORKSPACEDIR/sycl_compiler_gits
 
-if find AdaptiveCpp -mindepth 1 -maxdepth 1 | read; then
+count="$( find AdaptiveCpp -mindepth 1 -maxdepth 1 | wc -l )"
+if [ $count -eq 0 ] ; then
     echo "submodule ok"
 else
     echo "the submodule were not pulled"
