@@ -23,10 +23,34 @@ fi
 
 cd $WORKSPACEDIR/sycl_compiler_gits/AdaptiveCpp
 
+read -p "use cuda [y/n]: " yn
+case $yn in
+    [Yy]*) 
+        ARG_CUDA="-DWITH_CUDA_BACKEND=ON"  
+
+        read -p "do you want to specify cuda toolkit path [y/n]: " yn
+        case $yn in
+            [Yy]*) 
+                read -p "Enter path: " path  
+                ARG_TOOLKIT_LOC="-DCUDAToolkit_LIBRARY_ROOT=$path"
+                ;;  
+            [Nn]*) ARG_TOOLKIT_LOC="" ;;
+        esac
+
+        ;;  
+    [Nn]*) 
+        ARG_CUDA="" 
+        ARG_TOOLKIT_LOC=""
+        ;;
+
+esac
+
+echo "cmake $CMAKE_INSTALL_ $ARG_CUDA $ARG_TOOLKIT_LOC -B build . "
+
 INSTALL_PATH=$WORKSPACEDIR/sycl_compilers/acpp
 CMAKE_INSTALL_="-DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}"
 
-cmake $CMAKE_INSTALL_ -B build . 
+cmake $CMAKE_INSTALL_ $ARG_CUDA $ARG_TOOLKIT_LOC -B build . 
 
 cd build
 make -j install
