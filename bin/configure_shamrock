@@ -1,0 +1,77 @@
+#!/bin/sh
+
+echo "---------------------------------------"
+echo "| Configure shamrock                  |"
+echo "---------------------------------------"
+echo 
+
+WORKSPACEDIR=$(realpath $(dirname "$0")/..)
+
+echo "Shamrock workspace dir :" $WORKSPACEDIR
+echo
+
+cd $WORKSPACEDIR
+
+#### build tool detection
+Buildtool="ninja"
+if ! type ninja > /dev/null; then
+    Buildtool="make"
+fi
+
+echo "current build system : ${Buildtool}"
+echo
+
+
+
+## configure configs
+
+if [ ${PyVenv:+x} ]; then 
+    
+    cd Shamrock
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/intel_llvm/" ]; then
+        
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build release \
+            --builddir build_config/intel_llvm_cuda_release --cxxpath $WORKSPACEDIR/sycl_compilers/intel_llvm --compiler intel_llvm --profile cuda
+            
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build debug \
+            --builddir build_config/intel_llvm_cuda_debug --cxxpath $WORKSPACEDIR/sycl_compilers/intel_llvm --compiler intel_llvm --profile cuda
+
+    else
+        echo "Intel llvm is not configured, to configure it run : interactive_intelllvm_setup"
+    fi
+
+    if [ -d "$WORKSPACEDIR/sycl_compilers/acpp/" ]; then
+        
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build release \
+            --builddir build_config/acpp_omp_release --cxxpath $WORKSPACEDIR/sycl_compilers/acpp --compiler acpp --profile omp
+            
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build debug \
+            --builddir build_config/acpp_omp_debug --cxxpath $WORKSPACEDIR/sycl_compilers/acpp --compiler acpp --profile omp
+            
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build asan \
+            --builddir build_config/acpp_omp_asan --cxxpath $WORKSPACEDIR/sycl_compilers/acpp --compiler acpp --profile omp
+
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build release \
+            --builddir build_config/acpp_cuda_sm70_release --cxxpath $WORKSPACEDIR/sycl_compilers/acpp --compiler acpp --profile cuda-sm70
+
+        python3 buildbot/configure.py --fresh --gen "${Buildtool}" --tests --build release \
+            --builddir build_config/acpp_generic_release --cxxpath $WORKSPACEDIR/sycl_compilers/acpp --compiler acpp --profile generic
+            
+    else
+        echo "AdaptiveCpp is not configured, to configure it run : interactive_acpp_setup"
+    fi
+
+
+else 
+    echo "Please activate the shamrock workspace before running this script"
+fi
+
+
+if [ -d "$WORKSPACEDIR/sycl_compilers/acpp/" ]; then
+    cd Shamrock
+    ln -sf build_config/acpp_omp_release build
+else 
+    cd Shamrock
+    ln -sf build_config/intel_llvm_cuda_release build
+fi

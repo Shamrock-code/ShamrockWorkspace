@@ -13,6 +13,7 @@ echo "Shamrock Workspace dir :" $WORKSPACEDIR
 chmod +x $WORKSPACEDIR/bin/interactive_intelllvm_setup
 chmod +x $WORKSPACEDIR/bin/interactive_acpp_setup
 chmod +x $WORKSPACEDIR/bin/update_compilers
+chmod +x $WORKSPACEDIR/bin/configure_shamrock
 
 export PATH=$WORKSPACEDIR/bin:$PATH
 
