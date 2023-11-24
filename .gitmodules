@@ -4,3 +4,5 @@
 [submodule "sycl_compiler_gits/AdaptiveCpp"]
 	path = sycl_compiler_gits/AdaptiveCpp
 	url = https://github.com/AdaptiveCpp/AdaptiveCpp.git
+[submodule "sycl_compiler_gits/intel_llvm"]
+	shallow = true
