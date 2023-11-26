@@ -37,7 +37,7 @@ case $yn in
         case $yn in
             [Yy]*) 
                 read -p "Enter path: " path  
-                ARG_CUDA='--cuda --cmake-opt="-DCUDAToolkit_LIBRARY_ROOT=$path"'
+                ARG_CUDA='--cuda --cmake-opt="'"-DCUDAToolkit_LIBRARY_ROOT=$path"'"'
                 ;;  
             [Nn]*)  ;;
         esac
