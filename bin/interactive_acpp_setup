@@ -16,8 +16,7 @@ cd $WORKSPACEDIR/sycl_compiler_gits
 count="$( find AdaptiveCpp -mindepth 1 -maxdepth 1 | wc -l )"
 if [ $count -eq 0 ] ; then
     echo "the submodule were not pulled"
-    git submodule init
-    git submodule update
+    git clone git@github.com:AdaptiveCpp/AdaptiveCpp.git
 fi
 
 

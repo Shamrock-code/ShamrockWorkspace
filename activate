@@ -68,7 +68,7 @@ echo "------ python venv configuration ------"
 export PyVenv=$WORKSPACEDIR/ShamrockPyVenv
 
 if [ -d "$PyVenv" ]; then
-
+    echo "Found python venv"
 else
     echo "creating python venv :"
     python3 -m venv $PyVenv
